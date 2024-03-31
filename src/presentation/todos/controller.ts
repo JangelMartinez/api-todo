@@ -23,8 +23,8 @@ export class TodosController {
         const id = +req.params.id;
         if (isNaN(id)) return res.status(400).json({ error: 'ID argument is not a number'});
 
-        const todo = prisma.todo.findFirst( {
-            where: { id: id}
+        const todo = await prisma.todo.findFirst( {
+            where: { id }
         });
 
         ( todo )
@@ -54,7 +54,7 @@ export class TodosController {
         if ( error ) return res.status(400).json( { error } )
 
         const todo = await prisma.todo.findFirst({
-            where: { id: id},
+            where: { id },
         });
 
         if ( !todo ) return res.status(400).json({error: `Todo with id ${id} not found`});
@@ -80,8 +80,8 @@ export class TodosController {
 
         if ( !todo ) return res.status(400).json({error: `Todo with id ${id} not found`});
 
-        const todoDelete = prisma.todo.delete({
-            where: { id: id}
+        const todoDelete = await prisma.todo.delete({
+            where: { id }
         });
 
         ( todoDelete )
